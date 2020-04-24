@@ -1,4 +1,4 @@
-package com.gageshan.day01.bio;
+package com.gageshan.bio;
 
 import java.io.IOException;
 import java.io.InputStream;
