@@ -73,3 +73,17 @@ I/O复用结合线程池就是Reactor模式基本设计思想。
 6）、worker线程池分配独立的worker线程进行业务处理，并返回结果  
 7）、handler收到响应的结果后，再通过send将结果返回给client  
 8）、reactor主线程可以对应多个reactor子线程  
+
+
+### Netty模型说明
+1）、Netty抽象出两组线程池，Bossgroup专门负责接收客户端连接，WorkerGroup专门负责网络读写操作  
+
+2）、NioEventLoop表示一个不断循环执行处理任务的线程，每个NioEventLoop都有一个selector，用于监听绑定在其上的socket网络通道  
+
+3）、NioEventLoop内部采用串行化设计，从消息的读取->解码->处理->编码->发送，始终由IO线程NioEventLoop负责
+
+- NioEventLoopGroup下包含多个NioEventLoop
+- 每个NioEventLoop中包含有一个Selector，一个taskQueue
+- 每个NioEventLoop的Selector上可以注册监听多个NioChannel
+- 每个NioChannel只会绑定在唯一的NioEventLoop上
+- 每个NioChannel都绑定有一个自己的ChannelPipeline

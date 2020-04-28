@@ -6,6 +6,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.CharsetUtil;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Create by gageshan on 2020/4/26 23:12
  */
@@ -16,6 +18,20 @@ import io.netty.util.CharsetUtil;
 public class NettyServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+
+//        ctx.channel().eventLoop().execute(
+//                new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        try {
+//                            Thread.sleep(5 * 1000);
+//                        } catch (InterruptedException e) {
+//                            System.out.println("异常处理：" + e.getMessage());
+//                        }
+//                    }
+//                }
+//        );
+
 
         System.out.println("server ctx =" + ctx);
         //将msg转换成一个ByteBuf
