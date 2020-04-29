@@ -1,0 +1,27 @@
+package com.gageshan.netty.inboundhandlerandoutboundhandler;
+
+import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioSocketChannel;
+
+/**
+ * Create by gageshan on 2020/4/29 17:20
+ */
+public class MyClient {
+    public static void main(String[] args) throws Exception {
+        NioEventLoopGroup group = new NioEventLoopGroup();
+
+        try {
+            Bootstrap bootstrap = new Bootstrap();
+            bootstrap.group(group)
+                    .channel(NioSocketChannel.class)
+                    .handler(new MyClientInitializer()); //自定义一个初始化类
+
+            ChannelFuture sync = bootstrap.connect("127.0.0.1", 7000).sync();
+            sync.channel().closeFuture().sync();
+        } finally {
+            group.shutdownGracefully();
+        }
+    }
+}
